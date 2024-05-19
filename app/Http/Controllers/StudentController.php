@@ -7,11 +7,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller {
-    public function index()
+    public function index(Request $request)
     {
-        $data = Student::all();
-        return response()->json($data);
+    if ($request->has('nrp')) {
+        $nrp = $request->query('nrp');
+        $data = Student::where('nrp', $nrp)->first();
+
+        if (!$data) {
+            return response()->json(['message' => 'Data not found'], 404);
+        }
+
+        return response()->json(['data' => [$data]]);
     }
+
+    $data = Student::all();
+    return response()->json(['data' => $data]);
+}
+
 
     public function show($id)
     {
