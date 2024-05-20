@@ -76,7 +76,7 @@ class StudentController extends Controller {
         $validatedData = $validator->validated();
         $data->update($validatedData);
 
-        return response()->json($data);
+        return response()->json($data, 201);
     }
 
     public function destroy($id)
